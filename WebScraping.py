@@ -18,7 +18,7 @@ def get_data(link_list):  # Extracting the data we are interested in.
         title_elem = item_results.find('h1', class_='it-ttl')
         try:
             price_elem = item_results.find('div', class_='u-flL w29 vi-price').find('span', class_='notranslate')
-        except:
+        except Exception:
             price_elem = item_results.find('span', class_='notranslate')
         location_elem = item_results.find('div', class_='iti-eu-bld-gry')
         shipment_elem = item_results.find('span', class_='notranslate sh-cst')
@@ -89,14 +89,3 @@ if __name__ == "__main__":
 #        return 'iphone x' in text.lower()
 
 # iphonex_products = results.find_all('h3', string=lambda text: look_for_iphonex(text))
-
-## Retrieving the links for the product pages of products:
-
-#for product_item in product_items:
-#    try:
-#        link = product_item.find('a')['href']
-#    except Exception:
-#        continue
-#    else:
-#        print(product_item.text.strip())
-#        print(f'Link to product page: {link}\n')
