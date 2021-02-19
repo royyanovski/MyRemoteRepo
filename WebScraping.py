@@ -16,25 +16,19 @@ def get_data(link_list):  # Extracting the data we are interested in.
         item_soup = BeautifulSoup(item_page.content, 'html.parser')
         item_results = item_soup.find(id="Body")
         title_elem = item_results.find('h1', class_='it-ttl')
-        try:
-            price_elem = item_results.find('div', class_='u-flL w29 vi-price').find('span', class_='notranslate')
-        except Exception:
-            price_elem = item_results.find('span', class_='notranslate')
+        price_elem = item_results.find('span', id='convbidPrice')
         location_elem = item_results.find('div', class_='iti-eu-bld-gry')
-        shipment_elem = item_results.find('span', class_='notranslate sh-cst')
+        shipment_elem = item_results.find('span', class_='sh-svc sh-nwr')
+        freeshipping_elem = item_results.find('span', class_='notranslate sh-fr-cst')
         condition_elem = item_results.find('div', class_='u-flL condText')
 
-        if title_elem == None:
-            pass
-        else:
-            title_elem.find('span', class_='g-hdn').decompose()
-        if shipment_elem == None:
-            pass
-        else:
-            shipment_elem.find('span', class_='sh-svc sh-nwr').decompose()
+        title_elem.find('span', class_='g-hdn').decompose()
+        if shipment_elem != None:
+            shipment_elem = shipment_elem.contents[1]
+        if price_elem != None:
+            price_elem.contents[1].decompose()
 
-        chosen_elements = [title_elem, price_elem, location_elem, shipment_elem, condition_elem]
-
+        chosen_elements = [title_elem, price_elem, location_elem, shipment_elem, freeshipping_elem,  condition_elem]
         for elem in chosen_elements:
             if elem != None:
                 print(elem.text.strip())
